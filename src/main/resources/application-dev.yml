@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    url: "${DEV_DB_URL:jdbc:mysql://localhost:3306/beslenme_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Europe/Istanbul}"
+    username: ${DEV_DB_USERNAME:root}
+    password: ${DEV_DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  mail:
+    username: ${MAIL_USERNAME:dev@example.invalid}
+    password: ${MAIL_PASSWORD:dev-only}
+
+jwt:
+  # Yalnızca local development için bilinen örnek anahtar.
+  # Production ortamında kesinlikle kullanılmamalıdır.
+  secret: ${JWT_SECRET:MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE=}
+
+openrouter:
+  api:
+    key: ${OPENROUTER_API_KEY:disabled}
+
+usda:
+  api:
+    key: ${USDA_API_KEY:disabled}
+
+app:
+  scheduling:
+    enabled: true
+
+  cors:
+    allowed-origin-patterns: "${CORS_ALLOWED_ORIGIN_PATTERNS:http://localhost:*,http://127.0.0.1:*}"
+
+logging:
+  level:
+    root: INFO
+    com.example.nutritionsporttracker: DEBUG
+    org.hibernate.SQL: INFO
