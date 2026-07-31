@@ -14,7 +14,7 @@ import java.util.Map;
 @Service
 public class OpenRouterClient {
 
-    @Value("${openrouter.api.key}")
+    @Value("${openrouter.api.key:test_key_placeholder}") // Buraya ":default" ekledik
     private String apiKey;
 
     @Value("${openrouter.model:openai/gpt-4o-mini}")

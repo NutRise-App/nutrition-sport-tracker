@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    url: "${TEST_DB_URL:jdbc:mysql://localhost:3306/beslenme_test?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Europe/Istanbul}"
+    username: ${TEST_DB_USERNAME:root}
+    password: ${TEST_DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+  mail:
+    username: test@example.invalid
+    password: test-password
+    test-connection: false
+
+jwt:
+  secret: MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE=
+  expiration: 3600000
+
+openrouter:
+  api:
+    key: test-disabled
+
+usda:
+  api:
+    key: test-disabled
+
+app:
+  scheduling:
+    enabled: false
+
+  cors:
+    allowed-origin-patterns: "http://localhost:*"
+
+logging:
+  level:
+    root: WARN
+    com.example.nutritionsporttracker: INFO

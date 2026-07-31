@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+  jpa:
+    hibernate:
+      # Gün 4 Flyway tamamlanınca validate yapılacak.
+      ddl-auto: none
+    show-sql: false
+
+  mail:
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
+jwt:
+  secret: ${JWT_SECRET}
+
+openrouter:
+  api:
+    key: ${OPENROUTER_API_KEY}
+  http_referer: ${OPENROUTER_HTTP_REFERER}
+  x_title: ${OPENROUTER_X_TITLE:NutRise}
+
+usda:
+  api:
+    key: ${USDA_API_KEY}
+
+app:
+  scheduling:
+    enabled: ${SCHEDULING_ENABLED:true}
+
+  cors:
+    allowed-origin-patterns: ${CORS_ALLOWED_ORIGIN_PATTERNS}
+
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}
+    com.example.nutritionsporttracker: ${LOG_LEVEL_APP:INFO}
+    org.hibernate.SQL: ${LOG_LEVEL_HIBERNATE:WARN}
