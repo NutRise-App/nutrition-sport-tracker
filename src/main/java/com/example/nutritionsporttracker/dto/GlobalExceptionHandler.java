@@ -1,5 +1,7 @@
 package com.example.nutritionsporttracker.dto;
 
+import com.example.nutritionsporttracker.exception.EmailAlreadyExistsException;
+
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.*;
 import org.springframework.security.access.AccessDeniedException;
@@ -47,6 +49,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleBadJson(Exception ex) {
         return ResponseEntity.badRequest().body(
                 new ErrorResponse("BAD_REQUEST", "Malformed request", List.of(ex.getMessage()))
+        );
+    }
+
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleEmailAlreadyExists(
+            EmailAlreadyExistsException ex
+    ) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                new ErrorResponse(
+                        "EMAIL_ALREADY_EXISTS",
+                        ex.getMessage(),
+                        List.of()
+                )
         );
     }
 

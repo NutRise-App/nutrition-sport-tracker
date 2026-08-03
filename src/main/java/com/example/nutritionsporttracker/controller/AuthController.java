@@ -5,6 +5,7 @@ import com.example.nutritionsporttracker.dto.RegisterRequest;
 import com.example.nutritionsporttracker.model.User;
 import com.example.nutritionsporttracker.security.JwtTokenProvider;
 import com.example.nutritionsporttracker.service.UserService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterRequest registerRequest) {
         User user = new User();
         user.setEmail(registerRequest.getEmail());
         user.setPassword(registerRequest.getPassword()); // ❗ service encode edecek

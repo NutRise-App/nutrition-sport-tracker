@@ -1,6 +1,7 @@
 package com.example.nutritionsporttracker.service;
 
 import com.example.nutritionsporttracker.dto.UpdateMeRequest;
+import com.example.nutritionsporttracker.exception.EmailAlreadyExistsException;
 import com.example.nutritionsporttracker.model.User;
 import com.example.nutritionsporttracker.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,9 +24,14 @@ public class UserService {
 
     // === REGISTER ===
     public User registerUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new EmailAlreadyExistsException(user.getEmail());
+        }
+
         if (user.getPassword() != null && !user.getPassword().startsWith("$2a$")) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+
         return userRepository.save(user);
     }
 
