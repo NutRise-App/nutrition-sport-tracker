@@ -1,0 +1,51 @@
+# Git
+.git
+.gitignore
+.github
+
+# Build outputs
+target
+build
+dist
+out
+
+# Maven wrapper is not used inside the Docker build
+.mvn
+mvnw
+mvnw.cmd
+
+# IDE
+.idea
+.vscode
+*.iml
+.classpath
+.project
+.settings
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+
+# Logs
+*.log
+logs
+
+# Documentation is not required in the runtime image
+docs
+README.md
+CONTRIBUTING.md
+
+# Local Docker files
+docker-compose*.yml
+docker-compose*.yaml
+compose*.yml
+compose*.yaml
