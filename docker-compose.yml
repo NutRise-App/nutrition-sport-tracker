@@ -1,0 +1,56 @@
+services:
+  mysql:
+    image: mysql:8.0.36
+    container_name: nutrise-mysql
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-beslenme_db}
+      MYSQL_USER: ${MYSQL_USER:-nutrise}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD must be set in .env}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?MYSQL_ROOT_PASSWORD must be set in .env}
+      TZ: Europe/Istanbul
+    ports:
+      - "${MYSQL_PORT:-3307}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h 127.0.0.1 -u root -p\"$${MYSQL_ROOT_PASSWORD}\" --silent"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+    networks:
+      - nutrise-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nutrise-backend:local
+    container_name: nutrise-backend
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      PORT: 8080
+      DEV_DB_URL: "jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-beslenme_db}?useUnicode=true&characterEncoding=utf8&serverTimezone=Europe/Istanbul"
+      DEV_DB_USERNAME: ${MYSQL_USER:-nutrise}
+      DEV_DB_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD must be set in .env}
+      APP_SCHEDULING_ENABLED: "false"
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-disabled}
+      USDA_API_KEY: ${USDA_API_KEY:-disabled}
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    networks:
+      - nutrise-network
+
+volumes:
+  mysql_data:
+
+networks:
+  nutrise-network:
+    driver: bridge
