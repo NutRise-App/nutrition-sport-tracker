@@ -5,6 +5,9 @@ spring:
   jackson:
     time-zone: Europe/Istanbul
 
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+
   sql:
     init:
       mode: never
@@ -39,6 +42,7 @@ spring:
 
 server:
   port: ${PORT:8080}
+  shutdown: graceful
 
 jwt:
   expiration: ${JWT_EXPIRATION:86400000}
@@ -51,3 +55,12 @@ openrouter:
 
 usda:
   base-url: https://api.nal.usda.gov/fdc
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
