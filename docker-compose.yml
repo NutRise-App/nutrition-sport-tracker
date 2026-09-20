@@ -101,6 +101,25 @@ services:
     networks:
       - nutrise-network
 
+  ai-worker:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    image: nutrise-ai-worker:local
+    container_name: nutrise-ai-worker
+    command: ["python", "-m", "app.messaging.worker"]
+    env_file:
+      - ./ai-service/.env
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USER: ${RABBITMQ_USER:?RABBITMQ_USER must be set in .env}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:?RABBITMQ_PASSWORD must be set in .env}
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - nutrise-network
 volumes:
   mysql_data:
   rabbitmq_data:
