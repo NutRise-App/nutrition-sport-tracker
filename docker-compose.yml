@@ -1,4 +1,3 @@
-
 services:
   mysql:
     image: mysql:8.0.36
@@ -35,6 +34,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: dev
       PORT: 8080
@@ -45,6 +46,22 @@ services:
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-disabled}
       USDA_API_KEY: ${USDA_API_KEY:-disabled}
       MANAGEMENT_HEALTH_MAIL_ENABLED: "false"
+
+      # RabbitMQ: Spring Boot bağlantı ayarları
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_USER: ${RABBITMQ_USER:?RABBITMQ_USER must be set in .env}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:?RABBITMQ_PASSWORD must be set in .env}
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: "5672"
+      SPRING_RABBITMQ_USERNAME: ${RABBITMQ_USER:?RABBITMQ_USER must be set in .env}
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:?RABBITMQ_PASSWORD must be set in .env}
+
+      # RabbitMQ: yayın onayı ve yönlendirme kontrolü
+      SPRING_RABBITMQ_PUBLISHER_CONFIRM_TYPE: correlated
+      SPRING_RABBITMQ_PUBLISHER_RETURNS: "true"
+      SPRING_RABBITMQ_TEMPLATE_MANDATORY: "true"
+
     healthcheck:
       test:
         [
