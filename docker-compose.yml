@@ -46,6 +46,9 @@ services:
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-disabled}
       USDA_API_KEY: ${USDA_API_KEY:-disabled}
       MANAGEMENT_HEALTH_MAIL_ENABLED: "false"
+      APP_AIREPORT_RESULTCONSUMER_ENABLED: ${APP_AIREPORT_RESULTCONSUMER_ENABLED:-false}
+      MAIL_USERNAME: ${MAIL_USERNAME:?MAIL_USERNAME is required}
+      MAIL_PASSWORD: ${MAIL_PASSWORD:?MAIL_PASSWORD is required}
 
       # RabbitMQ: Spring Boot bağlantı ayarları
       RABBITMQ_HOST: rabbitmq

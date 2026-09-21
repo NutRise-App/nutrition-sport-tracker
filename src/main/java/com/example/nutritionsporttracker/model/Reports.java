@@ -18,6 +18,9 @@ public class Reports {
     @Lob
     private String reportText;
 
+    @Column(name = "report_id", length = 36, unique = true)
+    private String reportId;
+
     private Double caloriesIn;
     private Double caloriesOut;
     private Double avgProtein;
@@ -105,4 +108,12 @@ public class Reports {
 
     public void setGeneratedAt(LocalDateTime generatedAt) {
         this.generatedAt = generatedAt;
-    }}
+    }
+    public String getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(String reportId) {
+        this.reportId = reportId;
+    }
+}

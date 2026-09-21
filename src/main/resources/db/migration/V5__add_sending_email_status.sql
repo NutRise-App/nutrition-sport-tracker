@@ -1,0 +1,3 @@
+ALTER TABLE email_logs
+    MODIFY COLUMN status
+    ENUM('PENDING', 'SENDING', 'SENT', 'FAILED') DEFAULT NULL;
